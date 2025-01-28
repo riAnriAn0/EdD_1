@@ -1,0 +1,77 @@
+Registros
+10:00 04/10/2024
+
+
+Registros
+---------------------------
+▪Pode definir um novo tipo de dado (typedef)
+typedef struct {
+int dia;
+int mes;
+int ano;
+} data;
+▪Acesso aos campos utilizando . (ponto)
+data nasc_cristo;
+nasc_cristo.dia=25;
+nasc_cristo.mes=12;
+nasc_cristo.ano=0;
+
+
+Registros e Ponteiros
+-----------------------------
+▪Podemos criar ponteiros para registros
+
+data nasc_cristo;
+data *ptr_data = &nasc_cristo;
+
+▪Acesso aos campos
+(*ptr_data).dia = 25; //notação confusa
+*ptr_data.dia = 25; //errado
+
+▪Operador (->)
+ptr_data->dia = 25;
+
+▪Exemplo
+printf("%d", ptr_data->dia);
+
+▪Registros podem conter campos do tipo ponteiro
+
+typedef struct {
+char *nome;
+int telefone;
+data *nascimento;
+} contato;
+
+▪Acesso aos campos
+
+char n[100];
+data nasc;
+contato amigo;
+amigo.nome = &n;
+amigo.nascimento = &nasc;
+
+Alocação Dinâmica
+-------------------------------------
+Alocação Dinâmica
+
+▪Podemos alocar registros dinamicamente na memória
+▪Função malloc
+▪Função free
+▪Exemplo
+char n[100];
+contato *cnt = (contato *)malloc(sizeof(contato));
+cnt->nascimento = (data *)malloc(sizeof(data));
+cnt->nome = n;
+
+▪A função malloc também aloca vetores de registros
+▪Exemplo
+data *datas = (data *)malloc(sizeof(data) * total);
+scanf("%d", &datas[0].dia);
+scanf("%d", &datas[0].mes);
+scanf("%d", &datas[0].ano);
+printf("%02d/%02d/%04d\n", datas[0].dia,
+datas[0].mes, datas[0].ano);
+
+
+
+

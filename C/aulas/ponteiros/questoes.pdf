@@ -1,0 +1,15 @@
+4. Escreva um programa que declare um inteiro, um float e um char, e ponteiros para inteiro,
+float, e char. Associe as variáveis aos ponteiros (use &). Modifique os valores de cada variável
+usando os ponteiros. Imprima os valores das variáveis antes e após a modificação.
+5. Elaborar um programa que leia dois valores inteiros (A e B). Em seguida faça uma função que
+retorne a soma do dobro dos dois números lidos. A função deverá armazenar o dobro de A na
+própria variável A e o dobro de B na própria variável B.
+6. Escreva um programa que declare um array de inteiros e um ponteiro para inteiros. Associe o
+ponteiro ao array. Agora, some mais um (+1) a cada posição do array usando o ponteiro (use *).
+7. Faça um programa que leia um quantidade de elementos n, crie dinamicamente um vetor de n
+elementos e passe esse vetor para uma função que irá ler seus elementos. Em seguida, o vetor
+preenchido deve ser impresso.
+8. Escreva um programa em linguagem C que solicita do usuário a quantidade de alunos de uma
+turma e aloca um vetor de notas (números reais). Depois de ler as notas, o programa deve
+imprimir a média aritmética da turma. Obs: não deve ocorrer desperdício de memória; e após
+ser utilizada a memória deve ser devolvida.

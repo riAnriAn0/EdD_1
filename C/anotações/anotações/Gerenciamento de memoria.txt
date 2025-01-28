@@ -1,0 +1,82 @@
+Gerenciamento de memoria 
+10:01 04/10/2024
+
+Alocação Dinâmica X Estática
+-----------------------------
+
+Alocação Estática vs Dinâmica
+▪Alocação Estática
+▪Alocação fixa de memória pode ser ineficiente
+▪Tamanhos fixos não são comuns a tudo
+▪Comum ter espaços alocados e não utilizados
+▪Alocação Dinâmica
+▪O programa pode solicitar e devolver memória
+enquanto está em execução
+▪Requer gerenciamento pelo desenvolvedor
+
+Alocação Estático 
+--------------------------
+▪Toda a memória a ser utilizada é alocada de uma vez
+▪Independente da quantidade usada na execução
+▪O espaço máximo depende do hardware
+▪Tamanho da memória “endereçável”
+▪Exemplo
+▪int. v[1000]
+▪Espaço contíguo na memória para 1000 inteiros
+▪Cada int. ocupa 4 bytes (total ~4KB)
+▪char v[1000]
+▪Espaço contíguo na memória para 1000 chars
+▪Cada char ocupa 1 byte (total ~1KB)
+
+
+Alocação Dinâmica
+----------------------------
+▪Aloca a memória sob demanda
+▪Aloca, libera e realoca durante a execução
+▪O SO seleciona blocos de memória que estão livres
+▪A memória alocada pode conter dados anteriores
+▪É necessário inicializar
+▪É responsabilidade do programador liberar a memória
+▪Exemplo
+▪char *c = (char *) malloc(1000)
+▪Espaço na memória de tamanho 1000 bytes
+▪int *v = (int *) malloc(1000 * sizeof(int))
+▪Espaço na memória de tamanho 4000 bytes
+
+Função malloc()
+----------------------------
+▪malloc
+▪Abreviatura de memory allocation
+▪Aloca um bloco de bytes consecutivos na memória
+e devolve o endereço para o início desse bloco
+▪O número de bytes é passado como argumento
+▪O programador deve armazenar o endereço
+retornado em um ponteiro de tipo apropriado
+
+char *ptr;
+ptr = malloc (1);
+scanf ("%c", ptr);
+
+Liberação de Memória
+----------------------------
+▪free
+▪Variáveis alocadas dinamicamente continuam a
+existir mesmo depois que blocos são executados
+▪Libera a memória alocada dinamicamente
+▪Avisa ao sistema que o bloco de bytes apontado
+por um ponteiro está disponível para reciclagem
+char *ptr;
+ptr = malloc (1);
+free(ptr);
+
+Ralocamento de Memoria
+-------------------------------
+▪realloc
+▪Altera durante a execução do programa, o tamanho
+de um bloco de bytes que foi alocado por malloc
+▪Recebe o endereço de um bloco previamente
+alocado e o novo tamanho que o bloco deve ter
+▪Aloca um novo bloco, copia o conteúdo do bloco
+original, e devolve o endereço do novo bloco
+int *v = malloc (1000 * sizeof (int));
+v = realloc (v, 2000 * sizeof (int));
