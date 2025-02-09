@@ -3,7 +3,7 @@
 
 typedef struct
 {
-    char rua[50]; /// alocamento estatico da variavel
+    char rua[50]; 
     int casa;
     char cidade[30];
 } Endereco;
