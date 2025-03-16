@@ -9,7 +9,6 @@ uma das duas de maneira abstrata
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 typedef struct cel
 {
@@ -17,21 +16,16 @@ typedef struct cel
     int conteudo;
 } celula;
 
-int Is_empty(celula *first)
+typedef struct
 {
-    if (first == NULL)
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-}
+    celula *first;
+    celula *last;
+    int tam;
+} head;
 
 void imprimir(celula *first, celula *last)
 {
-    if (Is_empty(first))
+    if (first == NULL)
     {
         printf("\nA FILA ESTA VAZIA!!!\n");
         return;
@@ -58,7 +52,7 @@ void enfileirar(celula **first, celula **last, int conteudo)
     novo->conteudo = conteudo;
     novo->prox = NULL;
 
-    if (Is_empty(*first))
+    if (*first == NULL) // O IF APENAS COM *FIRST OU FIRST NÃO FUNCIONA
     {
         *first = novo;
         *last = novo;
@@ -72,7 +66,7 @@ void enfileirar(celula **first, celula **last, int conteudo)
 
 void desenfileirar(celula **first)
 {
-    if (Is_empty(*first))
+    if (*first == NULL)
     {
         printf("\nA FILA ESTA VAZIA!!!\n");
         return;
@@ -85,7 +79,7 @@ void desenfileirar(celula **first)
 
 void esvaziar(celula **first)
 {
-    if (Is_empty(*first))
+    if (*first == NULL)
     {
         printf("\nA FILA ESTA VAZIA!!!\n");
         return;
@@ -100,31 +94,14 @@ void esvaziar(celula **first)
         cont++;
     }
 
+    *first = NULL;
     printf("Lista esvaziada com sucesso!!!\n");
     return;
 }
 
-int size(celula *first)
-{
-    int cont = 0;
-
-    if (Is_empty(first))
-    {
-        return 0;
-    }
-
-    celula *aux = first;
-    while (aux != NULL)
-    {
-        cont++;
-        aux = aux->prox;
-    }
-    return cont;
-}
-
 void posicao(celula *first, int conteudo)
 {
-    if (Is_empty(first))
+    if (first == NULL)
     {
         printf("\nA FILA ESTA VAZIA!!!\n");
         return;
@@ -165,13 +142,14 @@ void menu()
 int main()
 {
     int run = 1;
-    celula *first = NULL;
-    celula *last = NULL;
+    head cabeca;
+    cabeca.first = NULL;
+    cabeca.last = NULL;
+    cabeca.tam = 0;
 
     while (run)
     {
         int conteudo = 0;
-        int tam = 0;
 
         menu();
 
@@ -186,26 +164,28 @@ int main()
             printf("Conteudo: ");
             scanf("%d", &conteudo);
             getchar();
-            enfileirar(&first, &last, conteudo);
+            enfileirar(&(cabeca.first), &(cabeca.last), conteudo);
+            cabeca.tam += 1;
             break;
         case 2:
-            desenfileirar(&first);
+            desenfileirar(&(cabeca.first));
+            cabeca.tam -= 1;
             break;
         case 3:
-            imprimir(first, last);
+            imprimir(cabeca.first, cabeca.last);
             break;
         case 4:
-            tam = size(first);
-            printf("Tamanho: %d\n", tam);
+            printf("Tamanho: %d\n", cabeca.tam);
             break;
         case 5:
             printf("Busque por um item: ");
             scanf("%d", &conteudo);
             getchar();
-            posicao(first, conteudo);
+            posicao(cabeca.first, conteudo);
             break;
         case 6:
-            esvaziar(&first);
+            esvaziar(&(cabeca.first));
+            cabeca.tam = 0;
             break;
         case 0:
             run = 0;

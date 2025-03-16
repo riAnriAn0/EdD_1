@@ -18,6 +18,12 @@ typedef struct cel
     struct cel *prox;
 } celula;
 
+typedef struct
+{
+    celula *topo;
+    int tam;
+} head;
+
 void push(celula **topo, int conteudo)
 {
     celula *novo = (celula *)malloc(sizeof(celula));
@@ -32,10 +38,17 @@ void push(celula **topo, int conteudo)
 
 void pop(celula **topo)
 {
+
+    if (*topo == NULL)
+    {
+        printf("\nA FILA ESTA VAZIA!!!\n");
+        return;
+    }
+
     celula *pop = NULL;
     pop = *topo;
     *topo = pop->prox;
-
+    free(pop);
     return;
 }
 
@@ -53,36 +66,21 @@ int size(celula *topo)
     return cont;
 }
 
-int empty(celula *topo)
+void posicao(head cabeca, int conteudo)
 {
-    if (topo == NULL)
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-}
-
-void posicao(celula *topo, int conteudo)
-{
-    
-    if (empty(topo))
+    if (cabeca.topo == NULL)
     {
         printf("\nA FILA ESTA VAZIA!!!\n");
         return;
     }
 
-    celula *aux = topo;
+    celula *aux = cabeca.topo;
     int cont = 1;
-    int total = size(topo);
     while (aux != NULL)
     {
         if (aux->conteudo == conteudo)
         {
-            int position = total - cont + 1;
-            printf("Item na posicao : %d\n", position);
+            printf("Item na posicao : %d\n", cont);
             return;
         }
 
@@ -96,7 +94,7 @@ void posicao(celula *topo, int conteudo)
 
 void esvaziar(celula **topo)
 {
-    if (empty(*topo))
+    if (*topo == NULL)
     {
         printf("\nA PILHA ESTA VAZIA!!!\n");
         return;
@@ -111,12 +109,19 @@ void esvaziar(celula **topo)
         cont++;
     }
 
+    *topo = NULL;
     printf("Pilha esvaziada com sucesso!!!\n");
     return;
 }
 
 void imprimir(celula *topo)
 {
+    if (topo == NULL)
+    {
+        printf("\nA PILHA ESTA VAZIA!!!\n");
+        return;
+    }
+    
     celula *aux = topo;
     printf("Topo: %p\n", topo);
     while (aux != NULL)
@@ -149,12 +154,13 @@ void menu()
 int main()
 {
     int run = 1;
-    celula *topo = NULL;
+    head cabeca;
+    cabeca.topo = NULL;
+    cabeca.tam = 0;
 
     while (run)
     {
         int conteudo = 0;
-        int tam = 0;
 
         menu();
 
@@ -163,32 +169,33 @@ int main()
         scanf("%d", &op);
         getchar();
         switch (op)
-
         {
         case 1:
             printf("Conteudo: ");
             scanf("%d", &conteudo);
             getchar();
-            push(&topo, conteudo);
+            push(&(cabeca.topo), conteudo);
+            cabeca.tam += 1;
             break;
         case 2:
-            pop(&topo);
+            pop(&(cabeca.topo));
+            cabeca.tam -= 1;
             break;
         case 3:
-        imprimir(topo);
+            imprimir(cabeca.topo);
             break;
         case 4:
-            tam = size(topo);
-            printf("Tamanho: %d\n", tam);
+            printf("Tamanho: %d\n", cabeca.tam);
             break;
         case 5:
             printf("Busque por um item: ");
             scanf("%d", &conteudo);
             getchar();
-            posicao(topo, conteudo);
+            posicao(cabeca, conteudo);
             break;
         case 6:
-            esvaziar(&topo);
+            esvaziar(&cabeca.topo);
+            cabeca.tam = 0;
             break;
         case 0:
             run = 0;
